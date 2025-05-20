@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUẢN LÝ SÁCH</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1>QUẢN LÝ SÁCH</h1>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+                <button type="button" id="searchBtn"><i class="fas fa-search"></i> Tìm kiếm</button>
+            </div>
+
+            <form id="productForm">
+                <div class="form-group">
+                    <label for="name">Tên sản phẩm:</label>
+                    <input type="text" id="name" placeholder="Nhập tên sản phẩm" required>
+                </div>
+                <div class="form-group">
+                    <div for="price">Giá:</div>
+                    <input type="number" id="price" placeholder="Nhập giá" required min="0">
+                </div>
+                <div class="form-group">
+                    <div for="stock">Tồn kho:</div>
+                    <input type="number" id="stock" placeholder="Nhập số lượng tồn kho" required min="0">
+                </div>
+                <div class="form-buttons">
+                    <button type="button" id="addBtn"><i class="fas fa-plus"></i> Thêm sản phẩm</button>
+                    <button type="button" id="updateBtn" disabled><i class="fas fa-save"></i> Cập nhật</button>
+                    <button type="button" id="cancelBtn" style="display:none"><i class="fas fa-times"></i> Hủy</button>
+                </div>
+            </form>
+
+            <div id="message"></div>
+        </div>
+
+        <div class="right-panel">
+            <h2>Danh sách sản phẩm</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Giá</th>
+                            <th>Tồn kho</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
