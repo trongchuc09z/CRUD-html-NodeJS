@@ -56,23 +56,6 @@ module.exports = {
         return rows;
     },
 
-    // Thêm hàm reset ID
-    resetAutoIncrement: async () => {
-        // Tạo bảng tạm thời
-        await pool.query('CREATE TEMPORARY TABLE temp_products SELECT * FROM products ORDER BY id');
-        // Xóa dữ liệu từ bảng chính
-        await pool.query('TRUNCATE TABLE products');
-        // Reset auto increment
-        await pool.query('ALTER TABLE products AUTO_INCREMENT = 1');
-        // Chèn lại dữ liệu từ bảng tạm thời
-        await pool.query('INSERT INTO products (name, price, stock) SELECT name, price, stock FROM temp_products');
-        // Xóa bảng tạm thời
-        await pool.query('DROP TEMPORARY TABLE temp_products');
-
-        // Lấy dữ liệu mới
-        const [rows] = await pool.query('SELECT * FROM products');
-        return rows;
-    },
     searchProducts: async (searchTerm) => {
         const [rows] = await pool.query(
             'SELECT * FROM products WHERE name LIKE ? OR id LIKE ?',

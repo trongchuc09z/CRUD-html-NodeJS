@@ -47,6 +47,7 @@ form button {
     font-size: 14.1px;
     flex: 1;
     min-width: 120px;
+    margin-bottom: 8px;
 }
 
 form button {
@@ -59,6 +60,21 @@ form button {
 
 form button:hover {
     background: #388E3C;
+}
+
+#cancelBtn {
+    background: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 8px;
+    font-size: 14.1px;
+    display: none;
+}
+
+#cancelBtn:hover {
+    background: #d32f2f;
 }
 
 #message {
@@ -133,3 +149,4 @@ tr:nth-child(even) {
 .search-container button:hover {
     background: #388E3C;
 }
+

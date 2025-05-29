@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            await fetch(API_URL, {
+            await fetch(API_URL, { // Gửi yêu cầu POST đến server để thêm sản phẩm
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, price, stock })
+                headers: { 'Content-Type': 'application/json' }, // Định dạng dữ liệu gửi đi là JSON    
+                body: JSON.stringify({ name, price, stock }) // Chuyển đổi dữ liệu thành chuỗi JSON
             });
 
             document.getElementById('productForm').reset();
@@ -44,8 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('updateBtn').addEventListener('click', async () => {
-        if (editingId === null) return;
-
         const name = document.getElementById('name').value;
         const price = document.getElementById('price').value;
         const stock = document.getElementById('stock').value;
@@ -73,13 +71,25 @@ document.addEventListener('DOMContentLoaded', () => {
             showMessage('Lỗi khi cập nhật sản phẩm!', true);
         }
     });
-});
 
-async function loadProducts() {
-    const res = await fetch(API_URL);
-    const products = await res.json();
-    displayProducts(products);
-}
+    // Add event listener for cancel button
+    document.getElementById('cancelBtn').addEventListener('click', function () {
+        // Reset the form
+        document.getElementById('productForm').reset();
+
+        // Reset editing state
+        editingId = null;
+
+        // Enable add button and disable update button
+        document.getElementById('updateBtn').disabled = true;
+        document.getElementById('addBtn').disabled = false;
+
+        // Hide cancel button
+        document.getElementById('cancelBtn').style.display = 'none';
+
+        showMessage('Đã hủy cập nhật!');
+    });
+});
 
 window.deleteProduct = async function (id) {
     if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
@@ -105,6 +115,7 @@ window.editProduct = function (id, name, price, stock) {
     editingId = id;
     document.getElementById('updateBtn').disabled = false;
     document.getElementById('addBtn').disabled = true;
+    document.getElementById('cancelBtn').style.display = 'block'; // Show cancel button
 };
 
 function showMessage(msg, isError = false) {
@@ -123,9 +134,9 @@ async function searchProducts() {
     }
 
     try {
-        const res = await fetch(`${API_URL}?search=${encodeURIComponent(searchTerm)}`);
+        // gần giống hàm load()
+        const res = await fetch(`${API_URL}?search=${encodeURIComponent(searchTerm)}`); // Gửi yêu cầu GET đến server với tham số tìm kiếm
         const products = await res.json();
-
         displayProducts(products);
     } catch (error) {
         showMessage('Lỗi khi tìm kiếm sản phẩm!', true);
@@ -134,7 +145,7 @@ async function searchProducts() {
 }
 
 // Tách hàm hiển thị sản phẩm để tái sử dụng
-function displayProducts(products) {
+function displayProducts(products) { // xóa dữ liệu cũ và hiển thị danh sách sản phẩm mới
     const tbody = document.getElementById('productList');
     tbody.innerHTML = '';
 
@@ -147,7 +158,7 @@ function displayProducts(products) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${product.id}</td>
-            <td>${product.name}</td>
+            <td>${product.name}</td> 
             <td>${product.price}</td>
             <td>${product.stock}</td>
             <td>
@@ -159,16 +170,11 @@ function displayProducts(products) {
     });
 }
 
-// Cập nhật hàm loadProducts để sử dụng hàm displayProducts
-async function loadProducts() {
-    const res = await fetch(API_URL);
+async function loadProducts() { // Hiển thị danh sách sản phẩm tải lên từ database
+    const res = await fetch(API_URL); // Gửi yêu cầu GET đến server để lấy danh sách sản phẩm
     const products = await res.json();
     displayProducts(products);
 }
-
-
-
-
 
 
 
